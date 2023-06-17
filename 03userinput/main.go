@@ -9,6 +9,7 @@ import (
 func main() {
 	fmt.Println("Welcome to our feedback system.")
 
+	// Read from os.Stdin
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("How was your experience with the recent product purchase? (0-5): ")
