@@ -11,6 +11,7 @@ func main() {
 	fmt.Println("GET Request")
 
 	GetReq()
+	PostReq()
 }
 
 func GetReq() {
@@ -34,4 +35,25 @@ func GetReq() {
 	fmt.Println(stringBuilder.String())
 
 	// fmt.Println(string(content))
+}
+
+func PostReq() {
+
+	data := strings.NewReader(`
+		{
+			"foo1": "bar1",
+			"foo2": "bar2"
+		}
+	`)
+	response, err := http.Post("https://jsonplaceholder.typicode.com/posts", "application/json", data)
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer response.Body.Close()
+
+	content, _ := ioutil.ReadAll(response.Body)
+
+	fmt.Println(string(content))
 }
