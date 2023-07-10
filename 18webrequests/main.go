@@ -13,6 +13,8 @@ func main() {
 		panic(err)
 	}
 
+	fmt.Printf("Type of response is %T\n", response)
+
 	defer response.Body.Close()
 
 	byteResponse, err := ioutil.ReadAll(response.Body)
