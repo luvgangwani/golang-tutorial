@@ -13,16 +13,12 @@ func main() {
 	filename := "./test-file.txt"
 	file, err := os.Create(filename)
 
-	if err != nil {
-		panic(err)
-	}
+	checkNilError(err)
 
 	fmt.Println("Insert content to the new file")
 	length, err := io.WriteString(file, "This is the test string I'm using for testing file handling")
 
-	if err != nil {
-		panic(err)
-	}
+	checkNilError(err)
 
 	fmt.Println("Length of the string written to the file is", length)
 
@@ -30,9 +26,13 @@ func main() {
 
 	databyte, err := ioutil.ReadFile(filename)
 
+	checkNilError(err)
+
+	fmt.Println("String read from the file is:", string(databyte))
+}
+
+func checkNilError(err error) {
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Println("String read from the file is:", string(databyte))
 }
