@@ -14,6 +14,8 @@ type Course struct {
 }
 
 func main() {
+
+	// Encoding
 	courses := []Course{
 		{"React JS", 2000, "reactjs.org", "reactjs", []string{"frontend", "javascript", "library"}},
 		{"Python", 4000, "python.org", "python", []string{"programming", "backend"}},
@@ -28,4 +30,42 @@ func main() {
 	}
 
 	fmt.Printf("%s\n", resultJson)
+
+	// Decoding
+	sourceJson := []byte(`
+	{
+                "coursename": "React JS",
+                "Price": 2000,
+                "website": "reactjs.org",
+                "keywords": [
+                        "frontend",
+                        "javascript",
+                        "library"
+                ]
+        }
+	`)
+
+	var source Course
+
+	checkValid := json.Valid(sourceJson)
+
+	if checkValid {
+		fmt.Println("JSON is valid")
+		json.Unmarshal(sourceJson, &source) // pass a reference to the output variable and not a copy
+		fmt.Printf("%#v\n", source)
+	} else {
+		fmt.Println("JSON is invalid")
+	}
+
+	// source json to a key-value pair
+	// this makes use of the struct aliases (converts the JSON as is rather than moulding it into a struct)
+	var mapSourceJson map[string]interface{}
+	json.Unmarshal(sourceJson, &mapSourceJson)
+	fmt.Printf("%#v\n", mapSourceJson)
+
+	// Print key-value
+
+	for k, v := range mapSourceJson {
+		fmt.Printf("Key is %v, Value is %v, Type of value is %T\n", k, v, v)
+	}
 }
